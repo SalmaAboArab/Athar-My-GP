@@ -1,0 +1,35 @@
+{
+  "name": "athar",
+  "version": "1.0.0",
+  "description": "Donation System to Help Countries",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "engines": {
+    "node": "18.12.1"
+  },
+  "author": "Hasnaa Abdel Nasser & Salma Hamdy",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.36.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.9.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^4.0.2",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
+    "socket.io": "^4.6.1",
+    "stripe": "^12.3.0"
+  }
+}
