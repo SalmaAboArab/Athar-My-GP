@@ -56,10 +56,10 @@ export const resetPassword =joi.object({
     role:joi.string().required()
 }).required()
 
-// export const logout=joi.object({
-//     id:generalFields.id,
-//     role:joi.string().required()
-// })
+export const logout=joi.object({
+    id:generalFields.id,
+    role:joi.string().required()
+})
 
 export const addAdmin =joi.object({
     name:joi.string().min(2).max(20).required(),

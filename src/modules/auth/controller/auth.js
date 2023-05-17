@@ -560,16 +560,16 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
 
 
 export const logout= asyncHandler(async (req, res, next) =>{
-    // const {id,role}=req.body;
+   const {id,role}=req.body;
     let user;
-    if(req.user.role.toLowerCase()=='user'){
-        user=await userModel.deleteOne({_id:req.user.id})
+    if(role.toLowerCase()=='user'){
+        user=await userModel.deleteOne({_id:id})
     }
-    else if(req.user.role.toLowerCase()=='charity'){
-        user=await charityModel.deleteOne({_id:req.user.id})
+    else if(role.toLowerCase()=='charity'){
+        user=await charityModel.deleteOne({_id:id})
     }
-    else if(req.user.role.toLowerCase()=='admin'){
-        user=await adminModel.deleteOne({_id:req.user.id})
+    else if(role.toLowerCase()=='admin'){
+        user=await adminModel.deleteOne({_id:id})
     }
     if (!user.deletedCount) {
         return next(new Error("Not register account", { cause: 404 }))
