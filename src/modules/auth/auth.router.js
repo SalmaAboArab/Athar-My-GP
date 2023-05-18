@@ -15,7 +15,7 @@ authRouter.post('/login',validation(validators.login),authController.login)
 authRouter.post('/sendCode',validation(validators.sendCode),authController.sendCode)
 authRouter.post('/confirmCode',validation(validators.confirmCode),authController.confirmCode)
 authRouter.put('/resetPassword',validation(validators.resetPassword),authController.resetPassword)
-authRouter.post('/logout',auth(Object.values(roles)),validation(validators.logout),authController.logout)
+authRouter.post('/logout',validation(validators.logout),authController.logout)
 authRouter.post('/addAdmin',validation(validators.addAdmin),authController.addAdmin)
 
 export default authRouter
