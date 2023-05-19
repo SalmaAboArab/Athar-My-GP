@@ -19,6 +19,8 @@ const adminSchema = mongoose.Schema({
         type: String,
     },
     address:String,
+    image: Object,
+    imageId:String,
     gender: {
         type: String,
         default: 'male',

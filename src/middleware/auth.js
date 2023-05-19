@@ -8,7 +8,7 @@ import adminModel from "../../database/models/admin.js";
 export const roles = {
     Admin: "Admin",
     User: 'User',
-    HR: "HR"
+    Charity: "Charity"
 }
 
 export const auth= (accessRoles=[])=>{
@@ -35,6 +35,9 @@ export const auth= (accessRoles=[])=>{
         else if(decoded.role=='admin'){
             user = await adminModel.findById(decoded.id)          // .select("username image")
         }
+        // if (parceInt(user.changePasswordTime?.getTime()/1000)>decoded.iat){
+        //     return next(new Error("Expired token",{cause:400}))
+        // }
         if(!user){
             return next(new Error("Not register user",{cause:401}))
         }

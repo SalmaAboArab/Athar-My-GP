@@ -5,6 +5,8 @@ import { ApiFeatures } from "../../utils/api.features.js";
 import { asyncHandler } from '../../utils/errorHandling.js';
 import adminModel from '../../../database/models/admin.js';
 import charityModel from '../../../database/models/charity.js';
+import cloudinary from '../../utils/cloudinary.js';
+import { Error } from 'mongoose';
 
 
 export const adduser = catchError(async(req,res,next)=>{
@@ -47,9 +49,32 @@ export const getProfile = asyncHandler(async(req,res,next)=>{
 })
 
 export const editProfile = asyncHandler(async(req,res,next)=>{
+    const {name,gender,phone,job,country}=req.body
     let profile;
-    if(req.user.role=='user') profile=await userModel.findById({_id:req.user.id})
-    else if(req.user.role=='charity') profile=await charityModel.findById({id:req.user.id})
-    else if(req.user.role=='admin') profile=await adminModel.findById({id:req.user.id})
+    if(req.user.role=='user') profile=await userModel.findByIdAndUpdate(req.user._id,{name,gender:gender.toLowerCase(),phone,job,country})
+    else{
+        return next(new Error("In-valid user", { cause: 400 }))
+    }
     return res.status(200).json({message:"Done",profile})
+})
+
+export const uploadProfileImage = asyncHandler(async(req,res,next)=>{
+    if(!req.file){
+        return next(new Error('File is required',{cause: 400}))
+    }
+    let user
+    if(req.user.role=='user'){
+        const {secure_url,public_id} = await cloudinary.uploader.upload(req.file.path,{folder:`user/${req.user._id}/profileImage`})
+        user = await userModel.findByIdAndUpdate(req.user._id,{image:secure_url,imageId:public_id},{new:false})
+    }
+    else if(req.user.role=='charity'){
+        const {secure_url,public_id} = await cloudinary.uploader.upload(req.file.path,{folder:`charity/${req.user._id}/profileImage`})
+        user = await userModel.findByIdAndUpdate(req.user._id,{image:secure_url,imageId:public_id},{new:false})
+    }
+    else if(req.user.role=='admin'){
+        const {secure_url,public_id} = await cloudinary.uploader.upload(req.file.path,{folder:`admin/${req.user._id}/profileImage`})
+        user = await userModel.findByIdAndUpdate(req.user._id,{image:secure_url,imageId:public_id},{new:false})
+    }
+    await cloudinary.uploader.destroy(user.imageId)
+    return res.json({messge:"Done",user})
 })

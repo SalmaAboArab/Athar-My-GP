@@ -2,6 +2,7 @@ import charityModel from '../../../database/models/charity.js';
 import { catchError } from "../../middleware/catch.errors.js";
 import { AppError } from "../../utils/response.error.js";
 import { ApiFeatures } from "../../utils/api.features.js";
+import { asyncHandler } from '../../utils/errorHandling.js';
 
 export const addcharity = catchError(async(req,res,next)=>{
     const charity = await charityModel.insertMany(req.body);
@@ -29,3 +30,25 @@ export const deleteusers = catchError(async(req,res,next)=>{
     await charityModel.deleteMany();
     res.status(200).json({ message: "success"});
 });
+
+export const editProfile = asyncHandler(async(req,res,next)=>{
+  const { name,Description,phone,CRN,address }=req.body;
+  let profile;
+  if(req.user.role=='charity') profile=await charityModel.findByIdAndUpdate(req.user._id,{name,Description,phone,CRN,address })
+  else{
+      return next(new Error("In-valid user", { cause: 400 }))
+  }
+  return res.status(200).json({message:"Done",profile})
+})
+
+export const verifyCharity = asyncHandler(async(req,res,next)=>{
+  const {verified} = req.body;
+  let charity;
+  if(req.user.role=='charity'){
+    charity=await charityModel.findByIdAndUpdate(req.user._id,{verified})
+  }
+  else{
+      return next(new Error("In-valid user", { cause: 400 }))
+  }
+  return res.status(200).json({message:"Done",charity})
+})

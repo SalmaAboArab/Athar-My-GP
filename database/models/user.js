@@ -49,6 +49,7 @@ const userSchema = new Schema({
         default: false,
     },
     image: Object,
+    imageId:String,
     forgetCode: {
         type: Number,
         default: null

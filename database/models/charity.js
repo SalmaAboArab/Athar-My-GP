@@ -38,6 +38,7 @@ const charitySchema = mongoose.Schema({
         enum: ['offline', 'online']
     },
     image: Object,
+    imageId:String,
     forgetCode: {
         type: Number,
         default: null
