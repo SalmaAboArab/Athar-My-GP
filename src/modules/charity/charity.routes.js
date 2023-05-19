@@ -11,6 +11,6 @@ charityRouter
   .delete(endPoint.deleteusers);
   charityRouter.get("/getcharity", endPoint.getcharity);
   charityRouter.get('/data',endPoint.charity)
-  charityRouter.put("/editProfile",auth("Charity"),validation(validators.editProfile),endPoint.editProfile)
-  charityRouter.put("/verifyCharity",auth("Charity"),endPoint.verifyCharity)
+  charityRouter.put("/editProfile",validation(validators.editProfile),endPoint.editProfile)
+  charityRouter.put("/verifyCharity",endPoint.verifyCharity)
 export default charityRouter;

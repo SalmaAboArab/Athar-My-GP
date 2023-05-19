@@ -32,9 +32,9 @@ export const deleteusers = catchError(async(req,res,next)=>{
 });
 
 export const editProfile = asyncHandler(async(req,res,next)=>{
-  const { name,Description,phone,CRN,address }=req.body;
+  const { id, role, name,Description,phone,CRN,address }=req.body;
   let profile;
-  if(req.user.role=='charity') profile=await charityModel.findByIdAndUpdate(req.user._id,{name,Description,phone,CRN,address })
+  if(role.toLowerCase()=='charity') profile=await charityModel.findByIdAndUpdate(id,{name,Description,phone,CRN,address })
   else{
       return next(new Error("In-valid user", { cause: 400 }))
   }
@@ -42,10 +42,10 @@ export const editProfile = asyncHandler(async(req,res,next)=>{
 })
 
 export const verifyCharity = asyncHandler(async(req,res,next)=>{
-  const {verified} = req.body;
+  const {id,role,verified} = req.body;
   let charity;
-  if(req.user.role=='charity'){
-    charity=await charityModel.findByIdAndUpdate(req.user._id,{verified})
+  if(role.toLowerCase()=='charity'){
+    charity=await charityModel.findByIdAndUpdate(id,{verified})
   }
   else{
       return next(new Error("In-valid user", { cause: 400 }))
