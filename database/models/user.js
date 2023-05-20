@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     job:String,
     country: String,
-    national_id:Number,
+    national_id:String,
     volunteer:{
         type:Boolean,
         default:false

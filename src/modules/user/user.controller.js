@@ -52,7 +52,7 @@ export const getProfile = asyncHandler(async(req,res,next)=>{
 export const editProfile = asyncHandler(async(req,res,next)=>{
     const {name,gender,phone,job,country}=req.body
     let profile;
-    if(req.user.role=='user') profile=await userModel.findByIdAndUpdate(req.user._id,{name,gender:gender.toLowerCase(),phone,job,country})
+    if(req.user.role=='user') profile=await userModel.findByIdAndUpdate(req.user._id,{name,gender:gender,phone,job,country})
     else{
         return next(new Error("In-valid user", { cause: 400 }))
     }
@@ -78,4 +78,27 @@ export const uploadProfileImage = asyncHandler(async(req,res,next)=>{
     }
     await cloudinary.uploader.destroy(user.imageId)
     return res.json({messge:"Done",user})
+})
+
+export const beVolunteer = asyncHandler(async(req,res,next)=>{
+    const {national_id} = req.body;
+    let volunteer;
+    if(req.user.role=='user'){
+        volunteer= await userModel.findByIdAndUpdate(req.user.id,{national_id,volunteer:true})
+    }
+    else{
+        return next(new Error("In-valid user", { cause: 400 }))
+    }
+    return res.status(200).json({message:"Done",volunteer})
+})
+
+export const exitVolunteer = asyncHandler(async(req,res,next)=>{
+    let volunteer;
+    if(req.user.role=='user'){
+        volunteer= await userModel.findByIdAndUpdate(req.user.id,{national_id:"",volunteer:false})
+    }
+    else{
+        return next(new Error("In-valid user", { cause: 400 }))
+    }
+    return res.status(200).json({message:"Done",volunteer})
 })

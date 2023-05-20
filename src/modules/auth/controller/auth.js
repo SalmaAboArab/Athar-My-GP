@@ -385,13 +385,13 @@ export const login = asyncHandler(async (req, res, next) => {
     //check email exist
     let user;
     if(role.toLowerCase()=='user'){
-        user = await userModel.findOne({ email: email.toLowerCase() })
+        user = await userModel.findOne({ email })
     }
     else if(role.toLowerCase()=='charity'){
-        user = await charityModel.findOne({ email: email.toLowerCase() })
+        user = await charityModel.findOne({ email })
     }
     else if(role.toLowerCase()=='admin'){
-        user = await adminModel.findOne({ email: email.toLowerCase() })
+        user = await adminModel.findOne({ email })
     }
     if (!user) {
         return next(new Error("Not register account", { cause: 404 }))

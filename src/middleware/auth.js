@@ -26,13 +26,13 @@ export const auth= (accessRoles=[])=>{
             return next(new Error("In-Valid token payload",{cause:400}))
         }
         let user;
-        if(decoded.role=='user'){
+        if(decoded.role.toLowerCase()=='user'){
             user = await userModel.findById(decoded.id)            // .select("username image")
         }
-        else if(decoded.role=='charity'){
+        else if(decoded.role.toLowerCase()=='charity'){
             user = await charityModel.findById(decoded.id)         // .select("username image")
         }
-        else if(decoded.role=='admin'){
+        else if(decoded.role.toLowerCase()=='admin'){
             user = await adminModel.findById(decoded.id)          // .select("username image")
         }
         // if (parceInt(user.changePasswordTime?.getTime()/1000)>decoded.iat){

@@ -11,3 +11,7 @@ export const editProfile =joi.object({
     country:joi.string().required()
 
 }).required()
+
+export const beVolunteer = joi.object({
+    national_id:joi.string().length(14).pattern(/^[0-9]+$/).required()
+}).required()

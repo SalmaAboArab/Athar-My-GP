@@ -16,6 +16,8 @@ userRouter
   userRouter.get("/getProfile",endPoint.getProfile)
   userRouter.put("/editProfile",auth("User"),validation(validators.editProfile),endPoint.editProfile)
   userRouter.patch("/uploadProfileImage",fileUpload(fileValidation.image).single('image'),endPoint.uploadProfileImage)
+  userRouter.patch("/beVolunteer",auth("User"),validation(validators.beVolunteer),endPoint.beVolunteer)
+  userRouter.patch("/exitVolunteer",auth("User"),endPoint.exitVolunteer)
 export default userRouter;
 
 
