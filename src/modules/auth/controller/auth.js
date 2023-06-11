@@ -1158,7 +1158,8 @@ export const login = asyncHandler(async (req, res, next) => {
 
     user.status = 'online'
     await user.save()
-    return res.status(200).json({ message: "Done", access_token, refresh_token ,Name:user.name,id:user._id,role:user.role,email:email})
+    if(role.toLowerCase()=='user')  return res.status(200).json({ message: "Done", access_token, refresh_token ,Name:user.name,id:user._id,role:user.role,email:email,volunteer:user.volunteer})
+    else return res.status(200).json({ message: "Done", access_token, refresh_token ,Name:user.name,id:user._id,role:user.role,email:email})
 })
 
 
