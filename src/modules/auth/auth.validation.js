@@ -46,7 +46,8 @@ export const sendCode =joi.object({
 export const confirmCode =joi.object({
     email:generalFields.email,
     code:joi.string().pattern(new RegExp(/^[0-9]{4}$/)).required(),
-    role:joi.string().required()
+    role:joi.string().required(),
+    process:joi.string().required()
 }).required()
 
 export const resetPassword =joi.object({
