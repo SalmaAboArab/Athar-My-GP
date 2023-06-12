@@ -102,6 +102,13 @@ export const getCountries = catchError(async (req, res, next) => {
   res.status(200).json({ message: "success", countries });
 });
 
+export const getCountry = catchError(async (req, res, next) => {
+  const {id}=req.params;
+  const country=await countryModel.findById(id);
+  if(!country) return next(new Error("Not founded charity", { cause: 404 }))
+   return res.status(200).json({ message: "success", country });
+ });
+
 export const getCountriesAdmin = catchError(async (req, res, next) => {
   const charities = await charityModel.countDocuments();
   const donationBoxes = await BoxModel.countDocuments();

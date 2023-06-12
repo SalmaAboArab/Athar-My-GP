@@ -20,4 +20,5 @@ countryRouter
 countryRouter.delete("/delete", endPoint.deleteCountry);
 countryRouter.get("/getallcountries", endPoint.getCountries);
 countryRouter.get("/dashboard/admin", endPoint.getCountriesAdmin);
+countryRouter.get("/getcountry/:id",endPoint.getCountry)
 export default countryRouter;
