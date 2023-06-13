@@ -60,9 +60,9 @@ export const editProfile = asyncHandler(async(req,res,next)=>{
 })
 
 export const uploadProfileImage = asyncHandler(async(req,res,next)=>{
-    //update
     if(!req.file){
         return next(new Error('File is required',{cause: 400}))
+        // return res.status(400).json("file is required")
     }
     let user
     if(req.user.role=='user'){
