@@ -6,7 +6,8 @@ const charitySchema = mongoose.Schema({
         required: [true, 'userName is required'],
         min: [2, 'minimum length 2 char'],
         max: [20, 'max length 2 char'],
-        trim: true
+        trim: true,
+        unique:true
     },
     email: {
         type: String,
