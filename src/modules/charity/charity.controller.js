@@ -51,5 +51,5 @@ export const verifyCharity = asyncHandler(async(req,res,next)=>{
   else{
       return next(new Error("In-valid user", { cause: 400 }))
   }
-  return res.status(200).json({message:"Done"})
+  return res.status(200).json({message:"Done",verified:verified})
 })
