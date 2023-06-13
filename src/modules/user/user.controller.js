@@ -60,6 +60,7 @@ export const editProfile = asyncHandler(async(req,res,next)=>{
 })
 
 export const uploadProfileImage = asyncHandler(async(req,res,next)=>{
+    //update
     if(!req.file){
         return next(new Error('File is required',{cause: 400}))
     }
