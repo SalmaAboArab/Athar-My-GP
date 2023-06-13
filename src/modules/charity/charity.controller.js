@@ -42,13 +42,14 @@ export const editProfile = asyncHandler(async(req,res,next)=>{
 })
 
 export const verifyCharity = asyncHandler(async(req,res,next)=>{
-  const {id,role,verified} = req.body;
+  const {name,role,verified} = req.body;
   let charity;
   if(role.toLowerCase()=='charity'){
-    charity=await charityModel.findByIdAndUpdate(id,{verified})
+    // charity=await charityModel.findByIdAndUpdate(name,{verified})
+    charity= await charityModel.updateOne({name},{verified})
   }
   else{
       return next(new Error("In-valid user", { cause: 400 }))
   }
-  return res.status(200).json({message:"Done",charity})
+  return res.status(200).json({message:"Done"})
 })
