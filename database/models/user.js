@@ -26,9 +26,9 @@ const userSchema = new Schema({
     job:String,
     country: String,
     national_id:String,
-    volunteer:{
-        type:Boolean,
-        default:false
+    national_id:{
+        type:String,
+        unique:true
     },
     gender: {
         type: String,
