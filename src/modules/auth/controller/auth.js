@@ -488,7 +488,7 @@ export const usersignup=asyncHandler(
         const hashPassword = hash({ plaintext: password })
         //create user
             const defaultImg="https://res.cloudinary.com/dfzbcjlal/image/upload/v1684446232/user/64663434cfc958c22bb3dc90/profileImage/vymbybgy7u9jumuxz5vz.png"
-            const { _id } = await userModel.create({ name,email,gender:gender.toLowerCase(),phone,job,country, password: hashPassword ,image:defaultImg,forgetCode})
+            const { _id } = await userModel.create({ name,email,gender:gender.toLowerCase(),phone,job:job.toLowerCase(),country, password: hashPassword ,image:defaultImg,forgetCode})
         return res.status(201).json({ message: "Done", _id })
     }
 )
