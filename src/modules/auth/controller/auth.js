@@ -1687,21 +1687,21 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
 
 
 export const logout= asyncHandler(async (req, res, next) =>{
-    const {id,role}=req.body;
-    let user;
-    if(role.toLowerCase()=='user'){
-        user=await userModel.deleteOne({_id:id})
-    }
-    else if(role.toLowerCase()=='charity'){
-        user=await charityModel.deleteOne({_id:id})
-    }
-    else if(role.toLowerCase()=='admin'){
-        user=await adminModel.deleteOne({_id:id})
-    }
-    if (!user.deletedCount) {
-        return next(new Error("Not register account", { cause: 404 }))
-    }
-    return res.status(200).json({ message: "Done" })
+  const {id,role}=req.body;
+  let user;
+  if(role.toLowerCase()=='user'){
+      user=await userModel.updateOne({_id:id},{status:'offline'})
+  }
+  else if(role.toLowerCase()=='charity'){
+      user=await charityModel.updateOne({_id:id},{status:'offline'})
+  }
+  else if(role.toLowerCase()=='admin'){
+      user=await adminModel.updateOne({_id:id},{status:'offline'})
+  }
+  if (!user.modifiedCount) {
+      return res.json({ message: "Error : Not registered account" ,cause: 404})
+  }
+  return res.status(200).json({ message: "Done" })
 })
 
 export const addAdmin=asyncHandler(async(req,res,next)=>{
