@@ -502,6 +502,9 @@ export const charitysignup=asyncHandler(
         if (await charityModel.findOne({ email: email.toLowerCase() }) || await userModel.findOne({ email: email.toLowerCase() }) || await adminModel.findOne({ email: email.toLowerCase() })) {
             return next(new Error("Email exist", { cause: 409 }))
         }
+        if(await charityModel.findOne({ name: name})){
+          return res.json({message:"This name is already exist, Charity name must be unique"})
+        }
       
         //sendEmail()
         const nanoId = customAlphabet('123456789', 4)
