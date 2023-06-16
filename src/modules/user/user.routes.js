@@ -13,7 +13,7 @@ userRouter
   userRouter.get("/getusers", endPoint.getusers);
   userRouter.get("/userdata" , endPoint.getuserdata);
   userRouter.get("/userList",auth(Object.values(roles)),endPoint.userList);
-  userRouter.get("/getProfile",endPoint.getProfile)
+  userRouter.post("/getProfile",endPoint.getProfile)
   userRouter.put("/editProfile",auth("User"),validation(validators.editProfile),endPoint.editProfile)
   userRouter.patch("/uploadProfileImage",fileUpload(fileValidation.image).single('image'),auth(Object.values(roles)),endPoint.uploadProfileImage)
   userRouter.patch("/beVolunteer",auth("User"),validation(validators.beVolunteer),endPoint.beVolunteer)
