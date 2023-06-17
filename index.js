@@ -1,4 +1,5 @@
 import express from 'express';
+import { Server } from 'socket.io';
 import connect from './database/dbConnection.js';
 import countryRouter from './src/modules/countries/countries.routes.js';
 import cors from 'cors';
@@ -12,23 +13,24 @@ import boxRouter from './src/modules/donationBoxes/boxes.routes.js';
 import financeRouter from './src/modules/finance/finance.controller.js';
 import donateRouter from './src/modules/donate/donate.routes.js';
 import authRouter from './src/modules/auth/auth.router.js'
+import chatRouter from './src/modules/chat/chat.router.js';
+
+
+// import { Socket } from 'socket.io';
+// const socket = require("socket.io");
+
+
 // import {createInvoice} from './src/utils/pdf.js'
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(express.json());
-app.use(cors(
-    {
-        credentials: true,
-        preflightContinue: true,
-        methods: ['GET', 'POST', 'PUT', 'PATCH' , 'DELETE', 'OPTIONS'],
-        origin: true
-    }
-));
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.static('uploads'));
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/auth', authRouter)
+app.use('/chat',chatRouter)
 
 app.use('/api/countries',countryRouter);
 app.use('/api/jobs',jobRouter);
@@ -77,7 +79,37 @@ app.use((err , req , res , next)=>{
     res.status(err.statusCode).json({message: err.message});
 })
 
-app.listen(port , ()=>{
+const server = app.listen(port , ()=>{
     console.log('listening on port ' + port);
 });
+
+// const io = new Server(server);
+
+const io = new Server(server,{
+    cors:'*'
+    // cors:{
+    //  origin:"http://localhost:4000" ,
+    //  Credentials: true 
+    // }
+})
+global.onlineUsers = new Map();
+
+io.on("connection",(socket)=>{
+    global.chatSocket=socket;
+    socket.on("add-user",(userId)=>{
+        onlineUsers.set(userId,socket.id);
+        console.log(onlineUsers);
+    })
+
+    socket.on("send-msg",(data)=>{
+        console.log(onlineUsers);
+        const sendUserSocket=onlineUsers.get(data.to);
+        console.log(data.to);
+        if(sendUserSocket){
+            console.log("add........");
+            socket.to(sendUserSocket).emit("msg-recieve",data.message)
+            console.log("done........");
+        }
+    })
+})
 
